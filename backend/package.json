@@ -4,7 +4,7 @@
   "description": "Simple voting app with Express and Postgres",
   "main": "index.js",
   "scripts": {
-    "start": "nodemone index.js"
+    "start": "nodemon index.js"
   },
   "author": "James Domingo",
   "license": "MIT",
