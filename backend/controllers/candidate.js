@@ -1,5 +1,11 @@
 const Candidate = require('../models/candidate')
 
+const errorFunc = (err) => {
+    if(!err.statusCode) {
+        err.statusCode = 500;
+    }
+}
+
 exports.getCandidates = async (req, res, next) => {
     try {
         const candidates =  await Candidate.findAll();
@@ -8,17 +14,20 @@ exports.getCandidates = async (req, res, next) => {
             candidates: candidates
         })
     } catch (err) {
-        console.log(err);
+        errorFunc(err)
+        next(err)
     }
 }
 
 exports.postCandidate = async (req, res, next) => {
     const name = req.body.name
     const position = req.body.position
+    const partyId = req.body.partyId
     try {
         const candidate = new Candidate({
             name: name,
-            position: position
+            position: position,
+            partyId: partyId
         })
 
         const result = await candidate.save()
@@ -27,6 +36,51 @@ exports.postCandidate = async (req, res, next) => {
             candidate: result
         })
     } catch (err) {
-        console.log(err)
+        errorFunc(err)
+        next(err)
+    }
+}
+
+exports.getCandidate = async (req, res, next) => {
+    const candidateId = req.params.candidateId;
+    try {
+        const candidate = await Candidate.findByPk(candidateId)
+        if (!candidate) {
+            const error = new Error('Candidate not found')
+            error.statusCode = 404;
+            throw error
+        }
+        res.status(200).json({
+            candidate: candidate
+        })
+    } catch (err) {
+        errorFunc(err)
+        next(err)
+    }
+}
+
+exports.updateCandidate = async (req, res, next) => {
+    const candidateId = req.params.candidateId
+    const name = req.body.name
+    const position = req.body.position
+    const party_id = req.body.party_id
+    try {
+        const candidate = await Candidate.findByPk(candidateId);
+        if (!candidate) {
+            const error = new Error ('Candidate not found');
+            error.statusCode = 404;
+            throw error
+        }
+        candidate.name = name;
+        candidate.position = position;
+        candidate.party_id = party_id;
+        const result = await candidate.save()
+        res.status(200).json({
+            message: "Candidate successfully updated",
+            candidate: result
+        })
+    } catch (err) {
+        errorFunc(err)
+        next(err)
     }
 }

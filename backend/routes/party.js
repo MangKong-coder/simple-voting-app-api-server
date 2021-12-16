@@ -4,9 +4,11 @@ const router =  express.Router()
 const partyController = require('../controllers/party');
 
 
-router.get('/', partyController.getParties)
+router.get('/', partyController.getParties);
 
-router.post('/', partyController.postParties)
+router.post('/', partyController.postParties);
+
+router.patch('/:partyId', partyController.updateParties)
 
 
 

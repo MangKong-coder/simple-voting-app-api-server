@@ -4,9 +4,11 @@ const sequelize = require('./util/db.js')
 
 const Candidate = require('./models/candidate')
 const Party = require('./models/party');
+const User = require('./models/user')
 
 const candidateRouter = require('./routes/candidate');
 const partyRouter = require('./routes/party');
+const authRouter = require('./routes/auth')
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/candidate', candidateRouter)
 app.use('/party', partyRouter)
+app.use('/auth', authRouter)
 
 app.use((error, req, res, next) => {
     console.log(error);
