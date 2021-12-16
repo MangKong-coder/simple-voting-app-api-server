@@ -1,10 +1,12 @@
 const Party =  require('../models/party')
+const { validationResult } = require('express-validator')
 
 const errorFunc = (err) => {
     if(!err.statusCode) {
         err.statusCode = 500;
     }
 }
+
 
 exports.getParties = async (req, res, next) => {
     try {
@@ -20,6 +22,12 @@ exports.getParties = async (req, res, next) => {
 }
 
 exports.postParties = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed, entered input is invalid.');
+        error.statusCode = 422;
+        throw error;
+    }
     const partyName = req.body.partyName
     try {
         const party = new Party({
@@ -38,6 +46,7 @@ exports.postParties = async (req, res, next) => {
 
 exports.updateParties = async (req, res, next) => {
     const partyId = req.params.partyId
+    validationCheck(req)
     try {
         const partyName = req.body.partyName;
         const party = await Party.findByPk(partyId);

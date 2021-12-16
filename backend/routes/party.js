@@ -1,14 +1,19 @@
 const express = require('express');
 const router =  express.Router()
+const { body } =  require('express-validator')
 
 const partyController = require('../controllers/party');
 
 
 router.get('/', partyController.getParties);
 
-router.post('/', partyController.postParties);
+router.post('/',
+    body('partyName').trim().isLength({min: 5}),
+    partyController.postParties);
 
-router.patch('/:partyId', partyController.updateParties)
+router.patch('/:partyId', 
+    body('partyName').trim().isLength({min: 5}), 
+    partyController.updateParties)
 
 
 

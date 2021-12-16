@@ -1,4 +1,14 @@
 const Candidate = require('../models/candidate')
+const { validationResult } = require('express-validator');
+
+const validationCheck = (req) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed, entered input is invalid.');
+        error.statusCode = 422;
+        throw error;
+    }
+}
 
 const errorFunc = (err) => {
     if(!err.statusCode) {
@@ -20,14 +30,15 @@ exports.getCandidates = async (req, res, next) => {
 }
 
 exports.postCandidate = async (req, res, next) => {
+    validationCheck(req)
     const name = req.body.name
     const position = req.body.position
-    const partyId = req.body.partyId
+    const party_id = req.body.party_id
     try {
         const candidate = new Candidate({
             name: name,
             position: position,
-            partyId: partyId
+            party_id: party_id
         })
 
         const result = await candidate.save()
@@ -60,6 +71,7 @@ exports.getCandidate = async (req, res, next) => {
 }
 
 exports.updateCandidate = async (req, res, next) => {
+    validationCheck(req)
     const candidateId = req.params.candidateId
     const name = req.body.name
     const position = req.body.position
