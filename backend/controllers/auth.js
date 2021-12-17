@@ -42,7 +42,6 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    let loadedUser;
     try {
         const user = await User.findOne({email: email})
         if(!user) {
@@ -59,7 +58,8 @@ exports.login = async (req, res, next) => {
         const token = jwt.sign(
             {
                 email: user.email, 
-                userId:user.id.toString()
+                userId:user.id.toString(),
+                admin: user.isAdmin
             }, 'somesupertopsecretsecret', { expiresIn: '1h' })
             res.status(200).json({
                 token: token, 

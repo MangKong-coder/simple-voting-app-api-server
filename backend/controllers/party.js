@@ -1,4 +1,5 @@
 const Party =  require('../models/party')
+const User = require('../models/user')
 const { validationResult } = require('express-validator')
 
 const errorFunc = (err) => {

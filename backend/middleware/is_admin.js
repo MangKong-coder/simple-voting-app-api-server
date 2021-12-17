@@ -1,12 +1,10 @@
 const User = require('../models/user');
 
 module.exports = async (req, res, next) => {
-    const user = await User.findByPk(req.userId);
-    if (user.isAdmin === true) {
-        next()
-    } else {
+    if (!req.admin) {
         const error = new Error('Not an admin');
-        error.statusCode(401);
+        error.statusCode = 403;
         throw error;
     }
+    next()
 }

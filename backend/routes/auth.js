@@ -8,7 +8,7 @@ router.post('/signup', [
     body('fname').trim(),
     body('lname').trim(),
     body('email').trim().isEmail(),
-    body('password').isStrongPassword()
+    body('password').trim().isLength({ min:5 })
 ], authController.signup);
 
 router.post('/login', authController.login)
