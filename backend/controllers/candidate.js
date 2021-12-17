@@ -1,5 +1,5 @@
-const Candidate = require('../models/candidate')
-const { validationResult } = require('express-validator');
+import Candidate from '../models/candidate.js'
+import { validationResult } from 'express-validator';
 
 const validationCheck = (req) => {
     const errors = validationResult(req);
@@ -16,7 +16,7 @@ const errorFunc = (err) => {
     }
 }
 
-exports.getCandidates = async (req, res, next) => {
+export const getCandidates = async (req, res, next) => {
     try {
         const candidates =  await Candidate.findAll();
         res.status(200).json({
@@ -29,7 +29,7 @@ exports.getCandidates = async (req, res, next) => {
     }
 }
 
-exports.postCandidate = async (req, res, next) => {
+export const postCandidate = async (req, res, next) => {
     validationCheck(req)
     const name = req.body.name
     const positionId = req.body.positionId
@@ -52,7 +52,7 @@ exports.postCandidate = async (req, res, next) => {
     }
 }
 
-exports.getCandidate = async (req, res, next) => {
+export const getCandidate = async (req, res, next) => {
     const candidateId = req.params.candidateId;
     try {
         const candidate = await Candidate.findByPk(candidateId)
@@ -70,7 +70,7 @@ exports.getCandidate = async (req, res, next) => {
     }
 }
 
-exports.updateCandidate = async (req, res, next) => {
+export const updateCandidate = async (req, res, next) => {
     validationCheck(req)
     const candidateId = req.params.candidateId
     const name = req.body.name

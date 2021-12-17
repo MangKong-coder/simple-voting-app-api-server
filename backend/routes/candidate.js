@@ -1,27 +1,28 @@
-const express = require('express');
-const router =  express.Router()
-const { body } = require('express-validator')
-const isAuth = require('../middleware/is_auth')
-const isAdmin = require('../middleware/is_admin')
+import express from 'express';
+import { body } from 'express-validator'
+import isAuth from '../middleware/is_auth.js'
+import isAdmin from '../middleware/is_admin.js';
+
+import { getCandidates, getCandidate, postCandidate, updateCandidate } from '../controllers/candidate.js'
+
+const router = express.Router()
 
 
-const candidateController = require('../controllers/candidate');
-
-router.get('/', isAuth, candidateController.getCandidates);
+router.get('/', isAuth, getCandidates);
 
 router.post('/', isAuth, isAdmin, [
     body('name').trim().isLength({min: 5}),
     body('positionId').isInt(),
     body('party_id').isInt()
 
-], candidateController.postCandidate);
+], postCandidate);
 
 router.patch('/:candidateId', isAuth,  [
     body('name').trim().isLength({min: 5}),
     body('positionId').isInt(),
     body('party_id').isInt()
-], candidateController.updateCandidate);
+], updateCandidate);
 
-router.get('/:candidateId', isAuth, candidateController.getCandidate);  
+router.get('/:candidateId', isAuth, getCandidate);  
 
-module.exports = router
+export default router

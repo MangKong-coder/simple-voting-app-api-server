@@ -1,16 +1,16 @@
-const express = require('express');
-const cors = require('cors')
-const sequelize = require('./util/db.js')
+import express from 'express'
+import cors from 'cors'
+import sequelize from './util/db.js'
 
-const Candidate = require('./models/candidate')
-const Party = require('./models/party');
-const User = require('./models/user')
-const Position = require('./models/position')
+import Candidate from './models/candidate.js';
+import Party from './models/party.js'
+import User from './models/user.js';
+import Position from './models/position.js';
 
-const candidateRouter = require('./routes/candidate');
-const partyRouter = require('./routes/party');
-const authRouter = require('./routes/auth')
-const positionRouter = require('./routes/position')
+import candidateRouter from './routes/candidate.js'
+import partyRouter from './routes/party.js'
+import authRouter from './routes/auth.js'
+import positionRouter from './routes/position.js'
 
 const app = express();
 

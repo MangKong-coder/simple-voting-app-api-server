@@ -1,6 +1,5 @@
-const Party =  require('../models/party')
-const User = require('../models/user')
-const { validationResult } = require('express-validator')
+import Party from '../models/party.js'
+import { validationResult } from 'express-validator'
 
 const errorFunc = (err) => {
     if(!err.statusCode) {
@@ -9,7 +8,7 @@ const errorFunc = (err) => {
 }
 
 
-exports.getParties = async (req, res, next) => {
+export const getParties = async (req, res, next) => {
     try {
         const parties = await Party.findAll()
         res.status(200).json({
@@ -22,7 +21,7 @@ exports.getParties = async (req, res, next) => {
     }
 }
 
-exports.postParties = async (req, res, next) => {
+export const postParty = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const error = new Error('Validation failed, entered input is invalid.');
@@ -45,7 +44,7 @@ exports.postParties = async (req, res, next) => {
     }
 }
 
-exports.updateParties = async (req, res, next) => {
+export const updateParty = async (req, res, next) => {
     const partyId = req.params.partyId
     validationCheck(req)
     try {

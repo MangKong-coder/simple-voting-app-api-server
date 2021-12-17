@@ -1,8 +1,9 @@
-const { Sequelize } = require('sequelize')
- 
-const Party = require('./party')
-const sequelize = require('../util/db');
-const Position = require('./position');
+import { Sequelize } from 'sequelize';
+
+import sequelize from '../util/db.js';
+
+import Party from './party.js';
+import Position from './position.js';
 
 const Candidate =  sequelize.define('candidate', {
     id: {
@@ -33,4 +34,4 @@ const Candidate =  sequelize.define('candidate', {
     
 })
 
-module.exports = Candidate;
+export default Candidate

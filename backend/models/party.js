@@ -1,8 +1,8 @@
-const { Sequelize } = require('sequelize')
+import { Sequelize } from 'sequelize';
 
-const sequelize = require('../util/db')
+import sequelize from '../util/db.js';
 
-const Party = sequelize.define('party', {
+export const Party = sequelize.define('party', {
     id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,4 +15,4 @@ const Party = sequelize.define('party', {
     }
 })
 
-module.exports = Party;
+export default Party

@@ -1,6 +1,6 @@
-const Position = require('../models/position')
+import Position from '../models/position.js';
 
-const { validationResult } = require('express-validator')
+import { validationResult } from 'express-validator';
 
 const errorFunc = (err) => {
     if(!err.statusCode) {
@@ -8,7 +8,7 @@ const errorFunc = (err) => {
     }
 }
 
-exports.getPositions = async (req, res, next) => {
+export const getPositions = async (req, res, next) => {
     try {
         const positions = await Position.findAll()
         if (!positions) {
@@ -26,7 +26,7 @@ exports.getPositions = async (req, res, next) => {
     }
 }
 
-exports.postPosition = async (req, res, next) => {
+export const postPosition = async (req, res, next) => {
     const errors = validationResult(req)
     if(!errors.isEmpty) {
         const error = new Error('Validation failed, input is invalid')
@@ -43,7 +43,7 @@ exports.postPosition = async (req, res, next) => {
     })
 }
 
-exports.updatedPosition = async (req, res, next) => {
+export const updatedPosition = async (req, res, next) => {
     const posId = req.params.positionId
     const errors = validationResult(req)
     if(!errors.isEmpty) {

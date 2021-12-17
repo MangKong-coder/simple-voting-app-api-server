@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-
+import { Sequelize } from "sequelize";
 
 // Option 3: Passing parameters separately (other dialects)
 const sequelize = new Sequelize('voting-app', 'root', 'admin', {
@@ -7,4 +6,4 @@ const sequelize = new Sequelize('voting-app', 'root', 'admin', {
   dialect: 'mysql' 
 });
 
-module.exports = sequelize;
+export default sequelize

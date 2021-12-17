@@ -1,11 +1,10 @@
-const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
-const jwt = require('jsonwebtoken')
-const { validationResult } = require('express-validator')
+import bcrypt from 'bcryptjs'
+import {v4 as uuidv4 } from 'uuid'
+import jwt from 'jsonwebtoken'
+import { validationResult } from 'express-validator'
+import User from '../models/user.js'
 
-const User = require('../models/user')
-
-exports.signup = async (req, res, next) => {
+export const signup = async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         const error = new Error('Validation failed, input is invalid')
@@ -39,7 +38,7 @@ exports.signup = async (req, res, next) => {
     }
 }
 
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     try {

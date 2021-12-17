@@ -1,23 +1,22 @@
-const express = require('express');
-const router =  express.Router()
-const { body } =  require('express-validator')
-const isAuth = require('../middleware/is_auth');
-const isAdmin = require('../middleware/is_admin')
+import express from 'express';
+import { body } from 'express-validator'
+import isAuth from '../middleware/is_auth.js'
+import isAdmin from '../middleware/is_admin.js';
 
-const partyController = require('../controllers/party');
+import { getParties, postParty, updateParty } from '../controllers/party.js'
+
+const router = express.Router()
 
 
-router.get('/', partyController.getParties);
+router.get('/', getParties);
 
 router.post('/', isAuth, isAdmin,
     body('partyName').trim().isLength({min: 5}),
-    partyController.postParties);
+    postParty);
 
 router.patch('/:partyId', isAuth, isAdmin,
     body('partyName').trim().isLength({min: 5}), 
-    partyController.updateParties)
+    updateParty)
 
 
-
-
-module.exports = router
+export default router

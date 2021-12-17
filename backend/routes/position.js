@@ -1,21 +1,21 @@
-const express = require('express');
-const router =  express.Router()
-const { body } =  require('express-validator')
-const isAuth = require('../middleware/is_auth');
-const isAdmin = require('../middleware/is_admin')
+import express from 'express';
+import { body } from 'express-validator'
+import isAuth from '../middleware/is_auth.js'
+import isAdmin from '../middleware/is_admin.js';
 
-const positionController = require('../controllers/position');
+import { getPositions, postPosition, updatedPosition } from '../controllers/position.js'
 
+const router = express.Router()
 
-router.get('/', positionController.getPositions);
+router.get('/', getPositions);
 
 router.post('/', isAuth, isAdmin,
     body('position').trim().isLength({min: 3}),
- positionController.postPosition);
+ postPosition);
 
 router.patch('/:positionId', isAuth, isAdmin,
     body('partyName').trim().isLength({min: 3}), 
- positionController.updatedPosition)
+ updatedPosition)
 
 
-module.exports = router
+export default router

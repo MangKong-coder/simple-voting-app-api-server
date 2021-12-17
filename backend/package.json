@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "API Sever for voting app built with Express and MySQL",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js"
   },
