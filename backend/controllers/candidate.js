@@ -32,12 +32,12 @@ exports.getCandidates = async (req, res, next) => {
 exports.postCandidate = async (req, res, next) => {
     validationCheck(req)
     const name = req.body.name
-    const position = req.body.position
+    const positionId = req.body.positionId
     const party_id = req.body.party_id
     try {
         const candidate = new Candidate({
             name: name,
-            position: position,
+            positionId: positionId,
             party_id: party_id
         })
 

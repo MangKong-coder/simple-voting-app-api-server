@@ -11,17 +11,17 @@ router.get('/', isAuth, candidateController.getCandidates);
 
 router.post('/', isAuth, isAdmin, [
     body('name').trim().isLength({min: 5}),
-    body('position').trim().isLength({min:3}),
+    body('positionId').isInt(),
     body('party_id').isInt()
 
 ], candidateController.postCandidate);
 
 router.patch('/:candidateId', isAuth,  [
     body('name').trim().isLength({min: 5}),
-    body('position').trim().isLength({min:3}),
+    body('positionId').isInt(),
     body('party_id').isInt()
 ], candidateController.updateCandidate);
 
-router.get('/:candidateId', isAuth, isAdmin, candidateController.getCandidate);  
+router.get('/:candidateId', isAuth, candidateController.getCandidate);  
 
 module.exports = router

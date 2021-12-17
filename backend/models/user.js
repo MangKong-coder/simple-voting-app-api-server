@@ -29,6 +29,11 @@ const User = sequelize.define('user', {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+    isVoted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
     }
 });
 

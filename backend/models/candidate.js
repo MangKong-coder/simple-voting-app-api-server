@@ -1,7 +1,8 @@
 const { Sequelize } = require('sequelize')
  
 const Party = require('./party')
-const sequelize = require('../util/db')
+const sequelize = require('../util/db');
+const Position = require('./position');
 
 const Candidate =  sequelize.define('candidate', {
     id: {
@@ -14,16 +15,19 @@ const Candidate =  sequelize.define('candidate', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    position: {
-        type: Sequelize.STRING,
-        allowNull: false
+    positionId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: Position,
+            key: 'id',
+        }
     },
     party_id: {
         type: Sequelize.INTEGER,
         references: {
             model: Party,
             key: 'id',
-            deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
         }
     }
     
