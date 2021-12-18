@@ -3,7 +3,7 @@ import { body } from 'express-validator'
 import isAuth from '../middleware/is_auth.js'
 import isAdmin from '../middleware/is_admin.js';
 
-import { getPositions, postPosition, updatedPosition } from '../controllers/position.js'
+import { getPositions, postPosition, updatedPosition, deletePosition } from '../controllers/position.js'
 
 const router = express.Router()
 
@@ -16,6 +16,8 @@ router.post('/', isAuth, isAdmin,
 router.patch('/:positionId', isAuth, isAdmin,
     body('partyName').trim().isLength({min: 3}), 
  updatedPosition)
+
+ router.delete('/:positionId', isAuth, isAdmin, deletePosition)
 
 
 export default router

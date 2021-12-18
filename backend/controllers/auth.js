@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { validationResult } from 'express-validator'
 import User from '../models/user.js'
 
+// signing up
 export const signup = async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -38,6 +39,7 @@ export const signup = async (req, res, next) => {
     }
 }
 
+// logging in
 export const login = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;

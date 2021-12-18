@@ -3,7 +3,7 @@ import { body } from 'express-validator'
 import isAuth from '../middleware/is_auth.js'
 import isAdmin from '../middleware/is_admin.js';
 
-import { getCandidates, getCandidate, postCandidate, updateCandidate } from '../controllers/candidate.js'
+import { getCandidates, getCandidate, postCandidate, updateCandidate, deleteCandidate } from '../controllers/candidate.js'
 
 const router = express.Router()
 
@@ -24,5 +24,7 @@ router.patch('/:candidateId', isAuth,  [
 ], updateCandidate);
 
 router.get('/:candidateId', isAuth, getCandidate);  
+
+router.delete('/:candidateId', isAuth, isAdmin, deleteCandidate)
 
 export default router

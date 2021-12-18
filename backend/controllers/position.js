@@ -8,14 +8,10 @@ const errorFunc = (err) => {
     }
 }
 
+// fetching all positions
 export const getPositions = async (req, res, next) => {
     try {
         const positions = await Position.findAll()
-        if (!positions) {
-            const error = new Error('No positions found');
-            error.statusCode = 404;
-            throw error
-        }
         res.status(200).json({
             positions: positions
         })
@@ -26,6 +22,7 @@ export const getPositions = async (req, res, next) => {
     }
 }
 
+// creating a position
 export const postPosition = async (req, res, next) => {
     const errors = validationResult(req)
     if(!errors.isEmpty) {
@@ -33,16 +30,23 @@ export const postPosition = async (req, res, next) => {
         error.statusCode = 422;
         throw error
     }
-    const position = new Position({
-        position: req.body.position
-    })
-    const result = await position.save()
-    res.status(200).json({
-        message: "Position created successfully",
-        position: result
-    })
+    try {
+        const position = new Position({
+            position: req.body.position
+        })
+        const result = await position.save()
+        res.status(200).json({
+            message: "Position created successfully",
+            position: result
+        })
+
+    } catch(err) {
+        errorFunc(err)
+        next(err)
+    }
 }
 
+// updating a position
 export const updatedPosition = async (req, res, next) => {
     const posId = req.params.positionId
     const errors = validationResult(req)
@@ -66,6 +70,26 @@ export const updatedPosition = async (req, res, next) => {
         })
     } catch (err) {
         errorFunc(err)
+        next(err)
+    }
+}
+
+// delete a position 
+export const deletePosition = async (req, res, next) => {
+    const positionId =  req.params.positionId;
+    try {
+        const position = await Position.findByPk(positionId);
+        if (!position) {
+            const error = new Error('Position cannot be found!');
+            error.statusCode = 404;
+            throw error
+        } 
+        const result = await position.destroy()
+        res.status(202).json({
+            message: "Position deleted successfully "
+        })
+    } catch (err) {
+        errorFunc(err);
         next(err)
     }
 }

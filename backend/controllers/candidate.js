@@ -1,14 +1,7 @@
 import Candidate from '../models/candidate.js'
 import { validationResult } from 'express-validator';
 
-const validationCheck = (req) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('Validation failed, entered input is invalid.');
-        error.statusCode = 422;
-        throw error;
-    }
-}
+
 
 const errorFunc = (err) => {
     if(!err.statusCode) {
@@ -16,6 +9,7 @@ const errorFunc = (err) => {
     }
 }
 
+// fetching all candidates
 export const getCandidates = async (req, res, next) => {
     try {
         const candidates =  await Candidate.findAll();
@@ -29,8 +23,14 @@ export const getCandidates = async (req, res, next) => {
     }
 }
 
+// creating a candidate
 export const postCandidate = async (req, res, next) => {
-    validationCheck(req)
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed, entered input is invalid.');
+        error.statusCode = 422;
+        throw error;
+    }
     const name = req.body.name
     const positionId = req.body.positionId
     const party_id = req.body.party_id
@@ -52,6 +52,7 @@ export const postCandidate = async (req, res, next) => {
     }
 }
 
+// fetching a specific candidate
 export const getCandidate = async (req, res, next) => {
     const candidateId = req.params.candidateId;
     try {
@@ -70,8 +71,14 @@ export const getCandidate = async (req, res, next) => {
     }
 }
 
+// updating existing candidate
 export const updateCandidate = async (req, res, next) => {
-    validationCheck(req)
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed, entered input is invalid.');
+        error.statusCode = 422;
+        throw error;
+    }
     const candidateId = req.params.candidateId
     const name = req.body.name
     const position = req.body.position
@@ -93,6 +100,26 @@ export const updateCandidate = async (req, res, next) => {
         })
     } catch (err) {
         errorFunc(err)
+        next(err)
+    }
+}
+
+// delete a candidate
+export const deleteCandidate = async (req, res, next) => {
+    const candidateId = req.params.candidateId;
+    try {
+        const candidate = await Candidate.findByPk(candidateId);
+        if (!candidate) {
+            const error = new Error('Candidate cannot be found');
+            error.statusCode = 404;
+            throw error;
+        }
+        const result = await candidate.destroy()
+        res.status(202).json({
+            message: "Candidate deleted successfully"
+        })
+    } catch (err) {
+        errorFunc(err);
         next(err)
     }
 }

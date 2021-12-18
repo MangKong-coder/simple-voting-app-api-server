@@ -3,7 +3,7 @@ import { body } from 'express-validator'
 import isAuth from '../middleware/is_auth.js'
 import isAdmin from '../middleware/is_admin.js';
 
-import { getParties, postParty, updateParty } from '../controllers/party.js'
+import { getParties, postParty, updateParty, deleteParty } from '../controllers/party.js'
 
 const router = express.Router()
 
@@ -17,6 +17,8 @@ router.post('/', isAuth, isAdmin,
 router.patch('/:partyId', isAuth, isAdmin,
     body('partyName').trim().isLength({min: 5}), 
     updateParty)
+
+router.delete('/:partyId', isAuth, isAdmin, deleteParty)
 
 
 export default router

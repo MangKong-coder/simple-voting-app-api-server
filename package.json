@@ -1,5 +1,11 @@
 {
   "dependencies": {
     "express-validator": "^6.14.0"
+  },
+  "scripts": {
+    "start": "nodemon backend/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

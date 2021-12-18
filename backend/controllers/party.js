@@ -7,7 +7,7 @@ const errorFunc = (err) => {
     }
 }
 
-
+// fetching parties
 export const getParties = async (req, res, next) => {
     try {
         const parties = await Party.findAll()
@@ -21,6 +21,7 @@ export const getParties = async (req, res, next) => {
     }
 }
 
+// creating a party
 export const postParty = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -44,9 +45,15 @@ export const postParty = async (req, res, next) => {
     }
 }
 
+// updating a party using party ID
 export const updateParty = async (req, res, next) => {
     const partyId = req.params.partyId
-    validationCheck(req)
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed, entered input is invalid.');
+        error.statusCode = 422;
+        throw error;
+    }
     try {
         const partyName = req.body.partyName;
         const party = await Party.findByPk(partyId);
@@ -64,5 +71,25 @@ export const updateParty = async (req, res, next) => {
     } catch (err) {
         errorFunc(err);
         next(err);
+    }
+}
+
+// delete a party
+export const deleteParty = async (req, res, next) => {
+    const partyId = req.params.partyId;
+    try {
+        const party = await Party.findByPk(partyId);
+        if (!party) {
+            const error = new Error('Party can not be found');
+            error.statusCode = 404;
+            throw error
+        }
+        const result = await party.destroy()
+        res.status(202).json({
+            message: "Party has been deleted"
+        })
+    } catch (err) {
+        errorFunc(err);
+        next(err)
     }
 }
