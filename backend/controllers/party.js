@@ -85,7 +85,7 @@ export const deleteParty = async (req, res, next) => {
             throw error
         }
         const result = await party.destroy()
-        res.status(202).json({
+        res.status(200).json({
             message: "Party has been deleted"
         })
     } catch (err) {

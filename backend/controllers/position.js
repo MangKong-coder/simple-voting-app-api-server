@@ -35,7 +35,7 @@ export const postPosition = async (req, res, next) => {
             position: req.body.position
         })
         const result = await position.save()
-        res.status(200).json({
+        res.status(201).json({
             message: "Position created successfully",
             position: result
         })
@@ -85,7 +85,7 @@ export const deletePosition = async (req, res, next) => {
             throw error
         } 
         const result = await position.destroy()
-        res.status(202).json({
+        res.status(200).json({
             message: "Position deleted successfully "
         })
     } catch (err) {

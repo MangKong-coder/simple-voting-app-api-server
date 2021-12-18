@@ -94,7 +94,7 @@ export const updateCandidate = async (req, res, next) => {
         candidate.position = position;
         candidate.party_id = party_id;
         const result = await candidate.save()
-        res.status(200).json({
+        res.status(201).json({
             message: "Candidate successfully updated",
             candidate: result
         })
@@ -115,7 +115,7 @@ export const deleteCandidate = async (req, res, next) => {
             throw error;
         }
         const result = await candidate.destroy()
-        res.status(202).json({
+        res.status(200).json({
             message: "Candidate deleted successfully"
         })
     } catch (err) {
