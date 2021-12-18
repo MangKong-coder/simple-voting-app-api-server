@@ -1,9 +1,25 @@
 {
-  "dependencies": {
-    "express-validator": "^6.14.0"
-  },
+  "name": "voting-app-server-api",
+  "version": "1.0.0",
+  "description": "API Sever for voting app built with Express and MySQL",
+  "main": "index.js",
+  "type": "module",
+  "repository": "https://github.com/MangKong-coder/simple-voting-app-api-server.git",
   "scripts": {
-    "start": "nodemon backend/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "author": "James Domingo",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "latest",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-alpha.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
