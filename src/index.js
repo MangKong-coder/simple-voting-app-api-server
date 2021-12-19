@@ -6,6 +6,7 @@ import Candidate from './models/candidate.js';
 import Party from './models/party.js'
 import User from './models/user.js';
 import Position from './models/position.js';
+import Vote from './models/vote.js'
 
 import candidateRouter from './routes/candidate.js'
 import partyRouter from './routes/party.js'
