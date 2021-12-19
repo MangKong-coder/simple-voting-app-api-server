@@ -24,12 +24,13 @@ const Candidate =  sequelize.define('candidate', {
             key: 'id',
         }
     },
-    party_id: {
+    partyId: {
         type: Sequelize.INTEGER,
         references: {
             model: Party,
             key: 'id',
-        }
+        },
+        allowNull: true
     }
     
 })

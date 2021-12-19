@@ -10,21 +10,24 @@ const router = express.Router()
 
 router.get('/', isAuth, getCandidates);
 
+router.get('/:candidateId', isAuth, getCandidate);  
+
+
 router.post('/', isAuth, isAdmin, [
     body('name').trim().isLength({min: 5}),
     body('positionId').isInt(),
-    body('party_id').isInt()
+    body('partyId').isInt()
 
 ], postCandidate);
 
 router.patch('/:candidateId', isAuth,  [
     body('name').trim().isLength({min: 5}),
     body('positionId').isInt(),
-    body('party_id').isInt()
+    body('partyId').isInt()
 ], updateCandidate);
 
-router.get('/:candidateId', isAuth, getCandidate);  
 
 router.delete('/:candidateId', isAuth, isAdmin, deleteCandidate)
+
 
 export default router

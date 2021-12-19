@@ -11,11 +11,16 @@ import candidateRouter from './routes/candidate.js'
 import partyRouter from './routes/party.js'
 import authRouter from './routes/auth.js'
 import positionRouter from './routes/position.js'
+import voteRouter from './routes/vote.js'
 
 const app = express();
 
 app.use(express.json());
 app.use(cors())
+
+Position.hasMany(Candidate);
+Party.hasMany(Candidate)
+
 
 app.get('/', (req, res, next) => {
     res.json({
@@ -27,6 +32,7 @@ app.use('/candidate', candidateRouter)
 app.use('/party', partyRouter)
 app.use('/auth', authRouter)
 app.use('/position', positionRouter)
+app.use('/vote', voteRouter)
 
 app.use((error, req, res, next) => {
     console.log(error);

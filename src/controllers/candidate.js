@@ -1,6 +1,7 @@
-import Candidate from '../models/candidate.js'
 import { validationResult } from 'express-validator';
 
+import Candidate from '../models/candidate.js'
+import Position from '../models/position.js'
 
 
 const errorFunc = (err) => {
@@ -33,12 +34,12 @@ export const postCandidate = async (req, res, next) => {
     }
     const name = req.body.name
     const positionId = req.body.positionId
-    const party_id = req.body.party_id
+    const partyId = req.body.partyId
     try {
         const candidate = new Candidate({
             name: name,
             positionId: positionId,
-            party_id: party_id
+            partyId: partyId
         })
 
         const result = await candidate.save()
@@ -82,7 +83,7 @@ export const updateCandidate = async (req, res, next) => {
     const candidateId = req.params.candidateId
     const name = req.body.name
     const position = req.body.position
-    const party_id = req.body.party_id
+    const partyId = req.body.partyId
     try {
         const candidate = await Candidate.findByPk(candidateId);
         if (!candidate) {
@@ -122,4 +123,6 @@ export const deleteCandidate = async (req, res, next) => {
         errorFunc(err);
         next(err)
     }
+
 }
+

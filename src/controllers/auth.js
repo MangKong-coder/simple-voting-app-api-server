@@ -61,7 +61,7 @@ export const login = async (req, res, next) => {
                 email: user.email, 
                 userId:user.id.toString(),
                 admin: user.isAdmin
-            }, 'somesupertopsecretsecret', { expiresIn: '1h' })
+            }, 'somesupertopsecretsecret', { expiresIn: '5h' })
             res.status(200).json({
                 token: token, 
                 userId: user.id.toString()
